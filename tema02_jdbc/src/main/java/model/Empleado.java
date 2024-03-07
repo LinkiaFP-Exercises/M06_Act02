@@ -20,6 +20,13 @@ public class Empleado {
         this.telefonoContacto = telefonoContacto;
     }
 
+    public Empleado(String nombreUsuario, String contrasena, String nombreCompleto, String telefonoContacto) {
+        this.nombreUsuario = nombreUsuario;
+        this.contrasena = contrasena;
+        this.nombreCompleto = nombreCompleto;
+        this.telefonoContacto = telefonoContacto;
+    }
+
     // Getters y setters
     public int getIdEmpleado() {
         return idEmpleado;
