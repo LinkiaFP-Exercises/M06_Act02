@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="orm.model.EmpleadosDto" table="empleados" schema="m06Act02Tema03">
+        <id name="idEmpleado">
+            <column name="id_empleado" sql-type="int"/>
+        </id>
+        <property name="nombreUsuario">
+            <column name="nombre_usuario" sql-type="varchar(255)"/>
+        </property>
+        <property name="contrasena">
+            <column name="contrasena" sql-type="varchar(255)"/>
+        </property>
+        <property name="nombreCompleto">
+            <column name="nombre_completo" sql-type="varchar(255)"/>
+        </property>
+        <property name="telefonoContacto">
+            <column name="telefono_contacto" sql-type="varchar(20)" length="20" not-null="true"/>
+        </property>
+        <set name="incidenciasByIdEmpleado" inverse="true">
+            <key>
+                <column name="id_empleado_origen" not-null="true"/>
+            </key>
+            <one-to-many not-found="ignore" class="orm.model.IncidenciasDto"/>
+        </set>
+    </class>
+</hibernate-mapping>
