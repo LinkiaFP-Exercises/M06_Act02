@@ -17,7 +17,7 @@ public class MainApp {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            session.save(empleado);
+            session.persist(empleado);
             transaction.commit();
             System.out.println("Empleado guardado con éxito");
 

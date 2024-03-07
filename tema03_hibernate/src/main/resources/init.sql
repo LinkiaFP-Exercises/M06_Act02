@@ -8,7 +8,7 @@ CREATE TABLE empleados (
     contrasena VARCHAR(255) NOT NULL,
     nombre_completo VARCHAR(255) NOT NULL,
     telefono_contacto VARCHAR(20)
-);
+) ENGINE=InnoDB;;
 
 CREATE TABLE incidencias (
     id_incidencia INT AUTO_INCREMENT PRIMARY KEY,
@@ -17,9 +17,9 @@ CREATE TABLE incidencias (
     id_empleado_destino INT,
     detalle VARCHAR(255) NOT NULL,
     tipo CHAR(1) CHECK (tipo IN ('U', 'N')) NOT NULL,
-    FOREIGN KEY (id_empleado_origen) REFERENCES empleados(id_empleado) ON DELETE SET NULL,
-    FOREIGN KEY (id_empleado_destino) REFERENCES empleados(id_empleado) ON DELETE SET NULL
-);
+    FOREIGN KEY (id_empleado_origen) REFERENCES empleados(id_empleado) ON DELETE CASCADE,
+    FOREIGN KEY (id_empleado_destino) REFERENCES empleados(id_empleado) ON DELETE CASCADE
+) ENGINE=InnoDB;;
 
 INSERT INTO empleados (nombre_usuario, contrasena, nombre_completo, telefono_contacto) VALUES
     ('agonzalez', 'password', 'Ana Gonzalez', '123456789'),

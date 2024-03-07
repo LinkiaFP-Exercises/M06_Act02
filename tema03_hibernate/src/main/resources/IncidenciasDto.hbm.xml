@@ -11,12 +11,12 @@
         <property name="fechaHora">
             <column name="fecha_hora" sql-type="timestamp"/>
         </property>
-        <property name="idEmpleadoOrigen">
-            <column name="id_empleado_origen" sql-type="int" not-null="true"/>
-        </property>
-        <property name="idEmpleadoDestino">
-            <column name="id_empleado_destino" sql-type="int" not-null="true"/>
-        </property>
+<!--        <property name="idEmpleadoOrigen">-->
+<!--            <column name="id_empleado_origen" sql-type="int" not-null="true"/>-->
+<!--        </property>-->
+<!--        <property name="idEmpleadoDestino">-->
+<!--            <column name="id_empleado_destino" sql-type="int" not-null="true"/>-->
+<!--        </property>-->
         <property name="detalle">
             <column name="detalle" sql-type="varchar(255)"/>
         </property>

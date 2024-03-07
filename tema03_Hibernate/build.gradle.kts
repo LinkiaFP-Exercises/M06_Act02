@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation("org.hibernate:hibernate-core:5.4.30.Final")
+    implementation("org.hibernate:hibernate-core:6.3.1.Final")
     implementation("mysql:mysql-connector-java:8.0.33")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
