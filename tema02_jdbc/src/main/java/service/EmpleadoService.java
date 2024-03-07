@@ -14,32 +14,66 @@ public class EmpleadoService implements EmpleadoDAO {
     private static final Logger log = Logger.getLogger(EmpleadoService.class.getName());
 
     @Override
-    public void insertar(Empleado empleado) {
+    public int insertar(Empleado empleado) {
+        int affectedRows = -1;
         String sql = "INSERT INTO empleados (nombre_usuario, contrasena, nombre_completo, telefono_contacto) VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = DatabaseConnection.get().prepareStatement(sql)) {
             stmt.setString(1, empleado.getNombreUsuario());
             stmt.setString(2, empleado.getContrasena());
             stmt.setString(3, empleado.getNombreCompleto());
             stmt.setString(4, empleado.getTelefonoContacto());
-            stmt.executeUpdate();
+            affectedRows = stmt.executeUpdate();
         } catch (SQLException e) {
-            log.throwing("EmpleadoService()", "insertar", e );
+            log.severe("Error al insertar nuevo empleado: " + e.getMessage());
         }
+        return affectedRows;
     }
 
     @Override
-    public void modificar(Empleado empleado) {
+    public int modificar(Empleado empleado) {
+        int affectedRows = -1;
+        String sql = "UPDATE empleados SET nombre_usuario = ?, contrasena = ?, nombre_completo = ?, telefono_contacto = ? WHERE id_empleado = ?";
+        try (PreparedStatement stmt = DatabaseConnection.get().prepareStatement(sql)) {
 
+            stmt.setString(1, empleado.getNombreUsuario());
+            stmt.setString(2, empleado.getContrasena());
+            stmt.setString(3, empleado.getNombreCompleto());
+            stmt.setString(4, empleado.getTelefonoContacto());
+            stmt.setInt(5, empleado.getIdEmpleado());
+
+            affectedRows = stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            log.severe("Error al modificar el empleado: " + e.getMessage());
+        }
+        return affectedRows;
     }
 
     @Override
-    public void cambiarContrasena(int idEmpleado, String nuevaContrasena) {
-
+    public int cambiarContrasena(int idEmpleado, String nuevaContrasena) {
+        int affectedRows = -1;
+        String sql = "UPDATE empleados SET contrasena = ? WHERE id_empleado = ?";
+        try (PreparedStatement stmt = DatabaseConnection.get().prepareStatement(sql)) {
+            stmt.setString(1, nuevaContrasena);
+            stmt.setInt(2, idEmpleado);
+            affectedRows = stmt.executeUpdate();
+        } catch (SQLException e) {
+            log.severe("Error al actualizar la contraseña del empleado: " + e.getMessage());
+        }
+        return affectedRows;
     }
 
     @Override
-    public void eliminar(int idEmpleado) {
-
+    public int eliminar(int idEmpleado) {
+        int affectedRows = -1;
+        String sql = "DELETE FROM empleados WHERE id_empleado = ?";
+        try (PreparedStatement stmt = DatabaseConnection.get().prepareStatement(sql)) {
+            stmt.setInt(1, idEmpleado);
+            affectedRows = stmt.executeUpdate();
+        } catch (SQLException e) {
+            log.severe("Error al eliminar el empleado: " + e.getMessage());
+        }
+        return affectedRows;
     }
 
     @Override
@@ -62,7 +96,7 @@ public class EmpleadoService implements EmpleadoDAO {
             }
 
         } catch (SQLException e) {
-            log.throwing("EmpleadoService()", "insertar", e );
+            log.severe("Error al buscar un empleado: " + e.getMessage());
         }
         return empleado;
     }
@@ -83,7 +117,7 @@ public class EmpleadoService implements EmpleadoDAO {
                 empleados.add(empleado);
             }
         } catch (SQLException e) {
-            log.throwing("EmpleadoService", "obtenerPorId()", e );
+            log.severe("Error al listar todos los empleado: " + e.getMessage());
         }
         return empleados;
     }
