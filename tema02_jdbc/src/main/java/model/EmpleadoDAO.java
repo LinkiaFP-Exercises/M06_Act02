@@ -3,10 +3,10 @@ package model;
 import java.util.List;
 
 public interface EmpleadoDAO {
-    void insertar(Empleado empleado);
-    void modificar(Empleado empleado);
-    void cambiarContrasena(int idEmpleado, String nuevaContrasena);
-    void eliminar(int idEmpleado);
+    int insertar(Empleado empleado);
+    int modificar(Empleado empleado);
+    int cambiarContrasena(int idEmpleado, String nuevaContrasena);
+    int eliminar(int idEmpleado);
     Empleado obtenerPorId(int idEmpleado);
     List<Empleado> obtenerTodos();
 }
