@@ -96,7 +96,46 @@ public class GestionEmpleados {
     }
 
     private static void modificarPerfilEmpleado() {
-        // Implementación para modificar el perfil de un empleado
+        try {
+            printlnGreen("--- MODIFICAR PERFIL DE EMPLEADO ---");
+
+            int opcionBusqueda = util.pideEntero("Buscar por (1) ID o (2) Nombre de Usuario: ");
+            EmpleadosDto empleado;
+
+            if (opcionBusqueda == 1) {
+                int idEmpleado = util.pideEntero("Introduce el ID del empleado: ");
+                empleado = empleadoService.buscarPorId(idEmpleado);
+            } else if (opcionBusqueda == 2) {
+                String nombreUsuario = util.pideTexto("Introduce el nombre de usuario del empleado: ");
+                empleado = empleadoService.buscarPorUsuario(nombreUsuario);
+            } else {
+                printLnRed("Opción no válida.");
+                return;
+            }
+
+            if (empleado == null) {
+                printLnRed("Empleado no encontrado.");
+                return;
+            }
+
+            String nuevoNombreUsuario = util.pideTexto("Introduce el nuevo nombre de usuario (actual: " + empleado.getNombreUsuario() + "): ");
+            String nuevoNombreCompleto = util.pideTexto("Introduce el nuevo nombre completo (actual: " + empleado.getNombreCompleto() + "): ");
+            String nuevoTelefonoContacto = util.pideTexto("Introduce el nuevo teléfono de contacto (actual: " + empleado.getTelefonoContacto() + "): ");
+
+            empleado.setNombreUsuario(nuevoNombreUsuario.isEmpty() ? empleado.getNombreUsuario() : nuevoNombreUsuario);
+            empleado.setNombreCompleto(nuevoNombreCompleto.isEmpty() ? empleado.getNombreCompleto() : nuevoNombreCompleto);
+            empleado.setTelefonoContacto(nuevoTelefonoContacto.isEmpty() ? empleado.getTelefonoContacto() : nuevoTelefonoContacto);
+
+            boolean exito = empleadoService.modificarPerfilEmpleado(empleado);
+
+            if (exito) {
+                printlnGreen("Perfil del empleado actualizado correctamente.");
+            } else {
+                printLnRed("Error actualizando el perfil del empleado.");
+            }
+        } catch (Exception e) {
+            printLnRed("Error modificando el perfil del empleado: " + e.getMessage());
+        }
     }
 
     private static void cambiarContrasenaEmpleado() {
