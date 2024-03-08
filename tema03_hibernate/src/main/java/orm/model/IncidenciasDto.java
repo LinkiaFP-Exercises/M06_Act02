@@ -86,4 +86,41 @@ public class IncidenciasDto {
         return empleadosByIdEmpleadoDestino != null ? empleadosByIdEmpleadoDestino.getIdEmpleado() : null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IncidenciasDto that = (IncidenciasDto) o;
+
+        if (getIdIncidencia() != that.getIdIncidencia()) return false;
+        if (!getFechaHora().equals(that.getFechaHora())) return false;
+        if (!getEmpleadosByIdEmpleadoOrigen().equals(that.getEmpleadosByIdEmpleadoOrigen())) return false;
+        if (!getEmpleadosByIdEmpleadoDestino().equals(that.getEmpleadosByIdEmpleadoDestino())) return false;
+        if (!getDetalle().equals(that.getDetalle())) return false;
+        return getTipo().equals(that.getTipo());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getIdIncidencia();
+        result = 31 * result + getFechaHora().hashCode();
+        result = 31 * result + getEmpleadosByIdEmpleadoOrigen().hashCode();
+        result = 31 * result + getEmpleadosByIdEmpleadoDestino().hashCode();
+        result = 31 * result + getDetalle().hashCode();
+        result = 31 * result + getTipo().hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "IncidenciasDto{" +
+                "idIncidencia=" + idIncidencia +
+                ", fechaHora=" + fechaHora +
+                ", empleadosByIdEmpleadoOrigen=" + empleadosByIdEmpleadoOrigen +
+                ", empleadosByIdEmpleadoDestino=" + empleadosByIdEmpleadoDestino +
+                ", detalle='" + detalle + '\'' +
+                ", tipo='" + tipo + '\'' +
+                '}';
+    }
 }
