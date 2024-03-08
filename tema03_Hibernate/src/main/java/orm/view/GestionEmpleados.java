@@ -78,7 +78,21 @@ public class GestionEmpleados {
     }
 
     private static void validarEmpleado() {
-        // Implementación para validar la entrada de un empleado
+        try {
+            printlnGreen("--- VALIDAR ENTRADA DE EMPLEADO ---");
+            String nombreUsuario = util.pideTexto("Introduce el nombre de usuario: ");
+            String contrasena = util.pideTexto("Introduce la contraseña: ");
+
+            boolean isValid = empleadoService.validarEmpleado(nombreUsuario, contrasena);
+
+            if (isValid) {
+                printlnGreen("Empleado validado correctamente.");
+            } else {
+                printLnRed("Credenciales incorrectos.");
+            }
+        } catch (Exception e) {
+            printLnRed("Error validando el empleado: " + e.getMessage());
+        }
     }
 
     private static void modificarPerfilEmpleado() {
