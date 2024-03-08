@@ -6,6 +6,8 @@ import orm.service.EmpleadoService;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static orm.utilities.Util.*;
+
 public class TestEmpleadoService {
 
     private static final Logger log = Logger.getLogger(TestEmpleadoService.class.getName());
@@ -34,7 +36,7 @@ public class TestEmpleadoService {
 
     private static void testListAll() {
         try {
-            printColored("LISTANDO TODOS EMPLEADOS: ", ANSI_YELLOW);
+            printYellow("LISTANDO TODOS EMPLEADOS: ");
             List<EmpleadosDto> empleados = empleadoService.obtenerTodosLosEmpleados();
             if (empleados != null && empleados.size() == 5)
                 printSuccess();
@@ -47,7 +49,7 @@ public class TestEmpleadoService {
     private static void testCreate() {
         try {
             empleadoMock = new EmpleadosDto(USUARIO_TEST, CONTRASENA_TEST, NOMBRE_COMPLETO, TELEFONO);
-            printColored("INSERTANDO EMPLEADO: ", ANSI_YELLOW);
+            printYellow("INSERTANDO EMPLEADO: ");
             empleadoService.insertarEmpleado(empleadoMock);
             printSuccess();
         } catch (Exception e) { log.severe(e.getMessage()); }
@@ -55,7 +57,7 @@ public class TestEmpleadoService {
 
     private static void testReadByUser() {
         try {
-            printColored("BUSCANDO EMPLEADO POR NOMBRE DE USUARIO: ", ANSI_YELLOW);
+            printYellow("BUSCANDO EMPLEADO POR NOMBRE DE USUARIO: ");
             EmpleadosDto empleado = empleadoService.buscarPorUsuario(USUARIO_TEST);
             if (empleado != null) {
                 usuario_id = empleado.getIdEmpleado();
@@ -68,7 +70,7 @@ public class TestEmpleadoService {
 
     private static void testReadById() {
         try {
-            printColored("BUSCANDO EMPLEADO POR ID: ", ANSI_YELLOW);
+            printYellow("BUSCANDO EMPLEADO POR ID: ");
             EmpleadosDto empleado = empleadoService.buscarPorId(usuario_id);
             if (empleado != null ) {
                 empleadoMock.setIdEmpleado(empleado.getIdEmpleado());
@@ -83,7 +85,7 @@ public class TestEmpleadoService {
 
     private static void testValidarUserPass() {
         try {
-            printColored("VALIDANDO EMPLEADO POR USUARIO Y CONTRASEÑA: ", ANSI_YELLOW);
+            printYellow("VALIDANDO EMPLEADO POR USUARIO Y CONTRASEÑA: ");
             if (empleadoService.validarEmpleado(USUARIO_TEST, CONTRASENA_TEST))
                 printSuccess();
             else
@@ -93,7 +95,7 @@ public class TestEmpleadoService {
 
     private static void testUpdate() {
         try {
-            printColored("ACTUALIZAR EMPLEADO: ", ANSI_YELLOW);
+            printYellow("ACTUALIZAR EMPLEADO: ");
             empleadoMock.setNombreUsuario("X");
             empleadoMock.setContrasena("X");
             empleadoMock.setNombreCompleto("X");
@@ -110,7 +112,7 @@ public class TestEmpleadoService {
 
     private static void testUpdatePassById() {
         try {
-            printColored("ACTUALIZAR CONTRASEÑA EMPLEADO POR ID: ", ANSI_YELLOW);
+            printYellow("ACTUALIZAR CONTRASEÑA EMPLEADO POR ID: ");
             empleadoService.cambiarContrasenaEmpleado(usuario_id, CONTRASENA_TEST, "X");
             EmpleadosDto empleado = empleadoService.buscarPorId(usuario_id);
             empleadoMock.setContrasena("X");
@@ -123,7 +125,7 @@ public class TestEmpleadoService {
 
     private static void testUpdatePassByUser() {
         try {
-            printColored("ACTUALIZAR CONTRASEÑA EMPLEADO POR USER: ", ANSI_YELLOW);
+            printYellow("ACTUALIZAR CONTRASEÑA EMPLEADO POR USER: ");
             empleadoService.cambiarContrasenaEmpleado("X", "X", CONTRASENA_TEST);
             EmpleadosDto empleado = empleadoService.buscarPorUsuario("X");
             empleadoMock.setContrasena(CONTRASENA_TEST);
@@ -136,7 +138,7 @@ public class TestEmpleadoService {
 
     private static void testDelete() {
         try {
-            printColored("BORRANDO EMPLEADO: ", ANSI_YELLOW);
+            printYellow("BORRANDO EMPLEADO: ");
             empleadoService.eliminarEmpleado(usuario_id);
             EmpleadosDto empleado = empleadoService.buscarPorId(usuario_id);
             if (empleado == null)
@@ -146,22 +148,7 @@ public class TestEmpleadoService {
         } catch (Exception e) { log.severe(e.getMessage()); }
     }
 
-    public static final String ANSI_RESET = "\u001B[0m";
-    public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
-    public static final String ANSI_YELLOW = "\u001B[33m";
-
-    private static void printColored(String message, String colorCode) {
-        System.out.print(colorCode + message + ANSI_RESET);
-    }
-    
-    private static void printFail() {
-        printColored("FAILURE!!!\n", ANSI_RED);
-    }
-    private static void printSuccess() {
-        printColored("SUCCESS!!!\n", ANSI_GREEN);
-    }
-    
-    
+    private static void printFail() { printLnRed("FAILURE!!!"); }
+    private static void printSuccess() { printlnGreen("SUCCESS!!!"); }
 
 }
