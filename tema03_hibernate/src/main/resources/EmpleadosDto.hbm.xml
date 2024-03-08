@@ -20,11 +20,18 @@
         <property name="telefonoContacto">
             <column name="telefono_contacto" sql-type="varchar(20)" length="20" not-null="true"/>
         </property>
-        <set name="incidenciasByIdEmpleado" inverse="true">
+        <set name="incidenciasByIdEmpleadoOrigen" inverse="true">
             <key>
                 <column name="id_empleado_origen" not-null="true"/>
             </key>
             <one-to-many not-found="ignore" class="orm.model.IncidenciasDto"/>
         </set>
+        <set name="incidenciasByIdEmpleadoDestino" inverse="true" lazy="true">
+            <key>
+                <column name="id_empleado_destino" not-null="true"/>
+            </key>
+            <one-to-many class="orm.model.IncidenciasDto"/>
+        </set>
+
     </class>
 </hibernate-mapping>
