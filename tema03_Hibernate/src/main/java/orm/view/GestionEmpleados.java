@@ -52,7 +52,7 @@ public class GestionEmpleados {
                 case 7:
                     salir = true;
                     util.close();
-                    printYellow("Saliendo del programa...");
+                    printlnGreen("Saliendo del programa...");
                     break;
                 default:
                     printLnRed("Opción no válida, por favor intente nuevamente.");
@@ -138,6 +138,7 @@ public class GestionEmpleados {
         }
     }
 
+
     private static void cambiarContrasenaEmpleado() {
         // Implementación para cambiar la contraseña de un empleado
     }
@@ -147,12 +148,13 @@ public class GestionEmpleados {
     }
 
     private static void listarTodosLosEmpleados() {
+        printlnGreen("--- LISTADO DE EMPLEADOS ---");
         List<EmpleadosDto> empleados = empleadoService.obtenerTodosLosEmpleados();
         if (empleados.isEmpty()) {
             System.out.println("No hay empleados registrados.");
         } else {
             for (EmpleadosDto empleado : empleados) {
-                System.out.println(printEmpleado(empleado));
+                printLnYellow(printEmpleado(empleado));
             }
         }
     }
