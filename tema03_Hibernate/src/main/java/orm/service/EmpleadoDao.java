@@ -91,6 +91,16 @@ public class EmpleadoDao {
         }
         catch (Exception e) { log.severe(e.getMessage()); }
     }
+    public boolean actualizarContrasenaTrusted(EmpleadosDto empleado) {
+        Transaction transaction;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            EmpleadosDto updated = session.merge(empleado);
+            transaction.commit();
+            return updated != null;
+        }
+        catch (Exception e) { log.severe(e.getMessage()); return false;}
+    }
 
     public void eliminarEmpleado(EmpleadosDto empleado) {
         Transaction transaction;

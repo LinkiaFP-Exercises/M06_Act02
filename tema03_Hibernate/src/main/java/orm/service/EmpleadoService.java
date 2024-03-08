@@ -40,6 +40,9 @@ public class EmpleadoService {
             empleadoDao.actualizarContrasena(empleado);
         }
     }
+    public boolean cambiarContrasenaEmpleadoTrusted(EmpleadosDto empleado) {
+           return empleadoDao.actualizarContrasenaTrusted(empleado);
+    }
 
     public void eliminarEmpleado(int idEmpleado) {
         EmpleadosDto empleado = empleadoDao.buscarEmpleadoPorId(idEmpleado);
