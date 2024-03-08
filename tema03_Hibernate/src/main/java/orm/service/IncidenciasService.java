@@ -19,4 +19,12 @@ public class IncidenciasService {
     public void crearIncidencia(IncidenciasDto incidencia) {
         incidenciasDao.insertarIncidencia(incidencia);
     }
+
+    public List<IncidenciasDto> obtenerIncidenciasPorOrigen(int idEmpleadoOrigen) {
+        return incidenciasDao.encontrarIncidenciasPorOrigen(idEmpleadoOrigen);
+    }
+
+    public List<IncidenciasDto> obtenerIncidenciasPorDestino(int idEmpleadoDestino) {
+        return incidenciasDao.encontrarIncidenciasPorDestino(idEmpleadoDestino);
+    }
 }

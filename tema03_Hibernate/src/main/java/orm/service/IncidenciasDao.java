@@ -1,5 +1,8 @@
 package orm.service;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import orm.config.HibernateUtil;
@@ -21,13 +24,20 @@ public class IncidenciasDao {
 
     public List<IncidenciasDto> listarTodasLasIncidencias() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            return session.createQuery("from IncidenciasDto", IncidenciasDto.class).list();
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<IncidenciasDto> cq = cb.createQuery(IncidenciasDto.class);
+            Root<IncidenciasDto> rootEntry = cq.from(IncidenciasDto.class);
+            CriteriaQuery<IncidenciasDto> all = cq.select(rootEntry);
+
+            return session.createQuery(all).getResultList();
+        } catch (Exception e) {
+            log.severe(e.getMessage());
+            return null;
         }
-        catch (Exception e) { log.severe(e.getMessage()); return null; }
     }
 
     public void insertarIncidencia(IncidenciasDto incidencia) {
-        Transaction transaction = null;
+        Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.persist(incidencia);
@@ -35,4 +45,25 @@ public class IncidenciasDao {
         }
         catch (Exception e) { log.severe(e.getMessage()); }
     }
+
+    public List<IncidenciasDto> encontrarIncidenciasPorOrigen(int idEmpleadoOrigen) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<IncidenciasDto> cq = cb.createQuery(IncidenciasDto.class);
+            Root<IncidenciasDto> incidencias = cq.from(IncidenciasDto.class);
+            cq.select(incidencias).where(cb.equal(incidencias.get("empleadosByIdEmpleadoOrigen").get("idEmpleado"), idEmpleadoOrigen));
+            return session.createQuery(cq).getResultList();
+        }
+    }
+
+    public List<IncidenciasDto> encontrarIncidenciasPorDestino(int idEmpleadoDestino) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            CriteriaBuilder cb = session.getCriteriaBuilder();
+            CriteriaQuery<IncidenciasDto> cq = cb.createQuery(IncidenciasDto.class);
+            Root<IncidenciasDto> incidencias = cq.from(IncidenciasDto.class);
+            cq.select(incidencias).where(cb.equal(incidencias.get("empleadosByIdEmpleadoDestino").get("idEmpleado"), idEmpleadoDestino));
+            return session.createQuery(cq).getResultList();
+        }
+    }
+
 }
