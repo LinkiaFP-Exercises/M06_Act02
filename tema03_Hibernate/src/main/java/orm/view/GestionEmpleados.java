@@ -144,7 +144,23 @@ public class GestionEmpleados {
     }
 
     private static void eliminarEmpleado() {
-        // Implementación para eliminar un empleado
+        try {
+            printlnGreen("--- ELIMINAR EMPLEADO ---");
+
+            int idEmpleado = util.pideEntero("Introduce el ID del empleado a eliminar: ");
+            EmpleadosDto empleado = empleadoService.buscarPorId(idEmpleado);
+
+            if (empleado == null) {
+                printLnRed("Empleado no encontrado.");
+                return;
+            }
+
+            empleadoService.eliminarEmpleado(idEmpleado);
+            printlnGreen("Empleado eliminado correctamente.");
+
+        } catch (Exception e) {
+            printLnRed("Error eliminando el empleado: " + e.getMessage());
+        }
     }
 
     private static void listarTodosLosEmpleados() {
