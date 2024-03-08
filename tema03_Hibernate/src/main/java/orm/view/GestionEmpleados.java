@@ -6,6 +6,8 @@ import orm.utilities.Util;
 
 import java.util.List;
 
+import static orm.utilities.Util.*;
+
 
 public class GestionEmpleados {
 
@@ -50,16 +52,29 @@ public class GestionEmpleados {
                 case 7:
                     salir = true;
                     util.close();
-                    System.out.println("Saliendo del programa...");
+                    printYellow("Saliendo del programa...");
                     break;
                 default:
-                    System.out.println("Opción no válida, por favor intente nuevamente.");
+                    printLnRed("Opción no válida, por favor intente nuevamente.");
             }
         } while (!salir);
     }
 
     private static void insertarEmpleado() {
-        // Implementación para insertar un empleado
+        try {
+            printlnGreen("--- INSERTAR NUEVO EMPLEADO ---");
+            String nombreUsuario = util.pideTexto("Introduce el nombre de usuario: ");
+            String contrasena = util.pideTexto("Introduce la contraseña: ");
+            String nombreCompleto = util.pideTexto("Introduce el nombre completo: ");
+            String telefonoContacto = util.pideTexto("Introduce el teléfono de contacto: ");
+
+            EmpleadosDto nuevoEmpleado = new EmpleadosDto(nombreUsuario, contrasena, nombreCompleto, telefonoContacto);
+
+            empleadoService.insertarEmpleado(nuevoEmpleado);
+            printlnGreen("Empleado insertado correctamente.");
+        } catch (Exception e) {
+            printLnRed("Error insertando el empleado: " + e.getMessage());
+        }
     }
 
     private static void validarEmpleado() {
@@ -84,7 +99,7 @@ public class GestionEmpleados {
             System.out.println("No hay empleados registrados.");
         } else {
             for (EmpleadosDto empleado : empleados) {
-                System.out.println(empleado);
+                System.out.println(printEmpleado(empleado));
             }
         }
     }
