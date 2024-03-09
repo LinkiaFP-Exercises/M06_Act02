@@ -5,6 +5,15 @@ import orm.model.IncidenciasDto;
 
 import java.util.Scanner;
 
+/**
+ * Proporciona utilidades generales para la aplicación, incluyendo métodos para solicitar entrada del usuario,
+ * cerrar el escáner y imprimir mensajes coloreados en la consola.
+ * También incluye métodos específicos para imprimir la información de {@link EmpleadosDto} e {@link IncidenciasDto}.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see EmpleadosDto
+ * @see IncidenciasDto
+ */
 public class Util {
     private final Scanner scanner;
 
@@ -12,6 +21,12 @@ public class Util {
         scanner = new Scanner(System.in);
     }
 
+    /**
+     * Solicita al usuario un entero, mostrando un enunciado y validando la entrada.
+     *
+     * @param enunciado El enunciado a mostrar al usuario.
+     * @return El entero proporcionado por el usuario.
+     */
     public int pideEntero(String enunciado) {
         while (true) {
             try {
@@ -22,6 +37,13 @@ public class Util {
             }
         }
     }
+
+    /**
+     * Solicita al usuario un texto, mostrando un enunciado y validando la entrada.
+     *
+     * @param enunciado El enunciado a mostrar al usuario.
+     * @return El texto proporcionado por el usuario.
+     */
     public String pideTexto(String enunciado) {
         while (true) {
             try {
@@ -59,11 +81,22 @@ public class Util {
     }
     public static void printLnYellow(String message) { System.out.println(ANSI_YELLOW + message + ANSI_RESET); }
 
+    /**
+     * Imprime la información de un {@link EmpleadosDto} formateada.
+     *
+     * @param subject El {@link EmpleadosDto} cuya información se imprimirá.
+     * @return La cadena de texto formateada con la información del empleado.
+     */
     public static String printEmpleado(EmpleadosDto subject) {
         return String.format("%-5s | %-20s | %-30s | %-15s",
                 subject.getIdEmpleado(), subject.getNombreUsuario(), subject.getNombreCompleto(), subject.getTelefonoContacto());
     }
 
+    /**
+     * Imprime la información de una {@link IncidenciasDto} formateada, incluyendo detalles específicos.
+     *
+     * @param subject La {@link IncidenciasDto} cuya información se imprimirá.
+     */
     public static void printIncidencia(IncidenciasDto subject) {
         String origen = subject.getEmpleadosByIdEmpleadoOrigen() != null
                 ? subject.getEmpleadosByIdEmpleadoOrigen().getNombreCompleto() : "Desconocido";
