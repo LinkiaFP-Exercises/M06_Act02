@@ -9,10 +9,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * Implementa las operaciones de acceso a datos para la entidad {@link Empleado}
+ * definidas en la interfaz {@link EmpleadoDAO}. Utiliza {@link config.DatabaseConnection}
+ * para obtener la conexión a la base de datos y ejecutar las operaciones SQL.
+ * <p>
+ * Provee la implementación de los métodos para insertar, modificar, cambiar la contraseña,
+ * eliminar, obtener por ID, y listar todos los empleados en la base de datos.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ */
 public class EmpleadoService implements EmpleadoDAO {
 
     private static final Logger log = Logger.getLogger(EmpleadoService.class.getName());
 
+    /**
+     * Inserta un nuevo empleado en la base de datos.
+     * Utiliza una instrucción SQL INSERT para añadir un nuevo registro de empleado con los datos proporcionados.
+     *
+     * @param empleado El objeto {@link Empleado} que contiene la información del empleado a insertar.
+     * @return El número de filas afectadas por la operación. Retorna -1 si ocurre un error.
+     */
     @Override
     public int insertar(Empleado empleado) {
         int affectedRows = -1;
@@ -29,6 +46,13 @@ public class EmpleadoService implements EmpleadoDAO {
         return affectedRows;
     }
 
+    /**
+     * Modifica los datos de un empleado existente en la base de datos.
+     * Actualiza la información del empleado especificado por su ID con los nuevos datos proporcionados.
+     *
+     * @param empleado El objeto {@link Empleado} que contiene la nueva información del empleado a modificar.
+     * @return El número de filas afectadas por la operación. Retorna -1 si ocurre un error.
+     */
     @Override
     public int modificar(Empleado empleado) {
         int affectedRows = -1;
@@ -49,6 +73,14 @@ public class EmpleadoService implements EmpleadoDAO {
         return affectedRows;
     }
 
+    /**
+     * Cambia la contraseña de un empleado.
+     * Actualiza la contraseña del empleado especificado por su ID con la nueva contraseña proporcionada.
+     *
+     * @param idEmpleado El ID del empleado cuya contraseña se va a cambiar.
+     * @param nuevaContrasena La nueva contraseña para el empleado.
+     * @return El número de filas afectadas por la operación. Retorna -1 si ocurre un error.
+     */
     @Override
     public int cambiarContrasena(int idEmpleado, String nuevaContrasena) {
         int affectedRows = -1;
@@ -63,6 +95,13 @@ public class EmpleadoService implements EmpleadoDAO {
         return affectedRows;
     }
 
+    /**
+     * Elimina un empleado de la base de datos.
+     * Borra el registro del empleado especificado por su ID.
+     *
+     * @param idEmpleado El ID del empleado a eliminar.
+     * @return El número de filas afectadas por la operación. Retorna -1 si ocurre un error.
+     */
     @Override
     public int eliminar(int idEmpleado) {
         int affectedRows = -1;
@@ -76,6 +115,13 @@ public class EmpleadoService implements EmpleadoDAO {
         return affectedRows;
     }
 
+    /**
+     * Obtiene los datos de un empleado por su ID.
+     * Busca en la base de datos el empleado especificado por el ID y retorna un objeto {@link Empleado} con sus datos.
+     *
+     * @param idEmpleado El ID del empleado a buscar.
+     * @return Un objeto {@link Empleado} con los datos del empleado encontrado o null si no se encuentra.
+     */
     @Override
     public Empleado obtenerPorId(int idEmpleado) {
         Empleado empleado = null;
@@ -101,6 +147,12 @@ public class EmpleadoService implements EmpleadoDAO {
         return empleado;
     }
 
+    /**
+     * Obtiene una lista de todos los empleados registrados en la base de datos.
+     * Recupera todos los registros de empleados y los devuelve en forma de una lista de objetos {@link Empleado}.
+     *
+     * @return Una lista de objetos {@link Empleado} con los datos de todos los empleados. La lista puede estar vacía si no hay empleados.
+     */
     @Override
     public List<Empleado> obtenerTodos() {
         List<Empleado> empleados = new ArrayList<>();
