@@ -4,6 +4,16 @@ import orm.model.IncidenciasDto;
 
 import java.util.List;
 
+/**
+ * Servicio que ofrece operaciones para gestionar incidencias.
+ * Facilita la creación, búsqueda y obtención de incidencias por diferentes criterios,
+ * como por ID, origen y destino. Utiliza {@link IncidenciasDao} para la comunicación
+ * con la base de datos y manejar la persistencia de las incidencias.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see IncidenciasDto
+ * @see IncidenciasDao
+ */
 public class IncidenciasService {
 
     private final IncidenciasDao incidenciasDao = new IncidenciasDao();
