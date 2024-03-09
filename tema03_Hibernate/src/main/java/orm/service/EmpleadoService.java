@@ -4,6 +4,15 @@ import orm.model.EmpleadosDto;
 
 import java.util.List;
 
+/**
+ * Servicio que ofrece operaciones para gestionar empleados.
+ * Proporciona funcionalidades para insertar, buscar, validar, modificar, cambiar contraseña y eliminar empleados.
+ * Estas operaciones se apoyan en {@link EmpleadoDao} para interactuar con la base de datos.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see EmpleadosDto
+ * @see EmpleadoDao
+ */
 public class EmpleadoService {
     private final EmpleadoDao empleadoDao = new EmpleadoDao();
 
