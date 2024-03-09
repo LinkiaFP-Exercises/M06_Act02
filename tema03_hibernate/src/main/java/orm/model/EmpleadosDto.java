@@ -5,7 +5,15 @@ import org.hibernate.annotations.NaturalId;
 
 import java.util.Collection;
 
-@SuppressWarnings("unused")
+/**
+ * Clase que representa la entidad de empleados en la base de datos.
+ * Contiene información sobre los empleados, como su ID, nombre de usuario, contraseña,
+ * nombre completo y teléfono de contacto. Esta clase se utiliza para mapear los datos
+ * de la tabla empleados en la base de datos a objetos en la aplicación.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see IncidenciasDto
+ */
 @Entity
 @Table(name = "empleados", schema = "m06Act02Tema03")
 public class EmpleadosDto {
