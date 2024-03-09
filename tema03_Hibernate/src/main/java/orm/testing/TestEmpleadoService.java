@@ -8,6 +8,17 @@ import java.util.logging.Logger;
 
 import static orm.utilities.Util.*;
 
+/**
+ * Clase para probar las funcionalidades del servicio de empleados.
+ * Incluye pruebas para listar todos los empleados, crear, buscar por usuario, buscar por ID,
+ * validar usuario y contraseña, actualizar perfil, cambiar contraseña y eliminar empleados.
+ * Estas pruebas se ejecutan al iniciar la aplicación para asegurar que el entorno y las
+ * funcionalidades básicas están trabajando como se espera.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see EmpleadoService
+ * @see EmpleadosDto
+ */
 public class TestEmpleadoService {
 
     private static final Logger log = Logger.getLogger(TestEmpleadoService.class.getName());
