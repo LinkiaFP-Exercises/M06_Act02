@@ -16,11 +16,11 @@ public class IncidenciasDto {
     @Column(name = "fecha_hora", nullable = false)
     private Timestamp fechaHora;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_empleado_origen", referencedColumnName = "id_empleado", insertable = false, updatable = false)
+    @JoinColumn(name = "id_empleado_origen", referencedColumnName = "id_empleado")
     private EmpleadosDto empleadosByIdEmpleadoOrigen;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_empleado_destino", referencedColumnName = "id_empleado", insertable = false, updatable = false)
+    @JoinColumn(name = "id_empleado_destino", referencedColumnName = "id_empleado")
     private EmpleadosDto empleadosByIdEmpleadoDestino;
 
     @Column(name = "detalle", nullable = false)
