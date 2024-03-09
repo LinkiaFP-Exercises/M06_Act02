@@ -6,11 +6,21 @@ import service.EmpleadoService;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+/**
+ * Proporciona una interfaz de usuario en la consola para la gestión de empleados.
+ * Permite realizar operaciones como insertar, modificar, cambiar contraseña, eliminar, mostrar y listar empleados.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ */
 public class Menu {
     private static final Logger log = Logger.getLogger(Menu.class.getName());
     private static final Scanner scanner = new Scanner(System.in);
     private static final EmpleadoService dao = new EmpleadoService();
 
+    /**
+     * Inicia el menú de gestión de empleados. Presenta diferentes opciones al usuario y ejecuta la acción seleccionada.
+     * Las opciones incluyen insertar, modificar, cambiar la contraseña, eliminar, mostrar, listar empleados, y salir del programa.
+     */
     public static  void start() {
         int opcion = -1;
         while (opcion != 0) {
@@ -56,6 +66,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Solicita al usuario la información del empleado y lo inserta en la base de datos.
+     * Utiliza el método insertar de {@link EmpleadoService}.
+     */
     private static void insertarEmpleado() {
         System.out.print("Ingrese el nombre de usuario: ");
         String usuario = scanner.nextLine();
@@ -77,6 +91,10 @@ public class Menu {
 
     }
 
+    /**
+     * Solicita al usuario el ID de un empleado para modificar y la nueva información para dicho empleado.
+     * Utiliza el método modificar de {@link EmpleadoService}.
+     */
     private static void modificarEmpleado() {
         Empleado empleado = mostrarEmpleado();
 
@@ -100,6 +118,10 @@ public class Menu {
         }
     }
 
+    /**
+     * Permite al usuario cambiar la contraseña de un empleado especificado por su ID.
+     * Utiliza el método cambiarContrasena de {@link EmpleadoService}.
+     */
     private static void cambiarContrasena() {
 
         System.out.print("Ingrese el ID del empleado cuya contraseña desea cambiar: ");
@@ -118,6 +140,10 @@ public class Menu {
         System.out.println("La contraseña ha sido actualizada.");
     }
 
+    /**
+     * Solicita al usuario el ID de un empleado para eliminarlo de la base de datos.
+     * Utiliza el método eliminar de {@link EmpleadoService}.
+     */
     private static void eliminarEmpleado() {
         System.out.print("Ingrese el ID del empleado que desea eliminar: ");
         int id = Integer.parseInt(scanner.nextLine());
@@ -129,6 +155,12 @@ public class Menu {
         }
     }
 
+    /**
+     * Muestra la información de un empleado especificado por su ID.
+     * Utiliza el método obtenerPorId de {@link EmpleadoService}.
+     *
+     * @return El empleado encontrado o null si no se encuentra.
+     */
     private static Empleado mostrarEmpleado() {
         System.out.print("Introduce el ID del empleado: ");
         int id = Integer.parseInt(scanner.nextLine());
@@ -141,6 +173,10 @@ public class Menu {
         return empleado;
     }
 
+    /**
+     * Lista todos los empleados registrados en la base de datos.
+     * Utiliza el método obtenerTodos de {@link EmpleadoService}.
+     */
     private static void listarTodosEmpleados() {
         dao.obtenerTodos().forEach(System.out::println);
     }
