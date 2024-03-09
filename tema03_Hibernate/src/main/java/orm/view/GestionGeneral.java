@@ -1,0 +1,68 @@
+package orm.view;
+
+import orm.utilities.Util;
+import orm.view.menu.empleados.*;
+import orm.view.menu.incidencias.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static orm.utilities.Util.*;
+
+public class GestionGeneral {
+    private static final Map<Integer, Runnable> opcionesMenu = new HashMap<>();
+    private static final Util util = new Util();
+
+    public static void start() {
+        GestionEmpleadosIncidencias();
+        int opcion;
+        do {
+            mostrarMenu();
+            opcion = util.pideEntero("Seleccione una opción: ");
+
+            Runnable accion = opcionesMenu.get(opcion);
+            if (accion != null && opcion >= 1 && opcion <= 11) {
+                accion.run();
+                pausaAntesDeContinuar();
+            } else if (opcion == 0) {
+                util.close();
+                printlnGreen("Saliendo del programa...");
+            } else {
+                printLnRed("Opción no válida, intente nuevamente.");
+            }
+        } while (opcion != 0);
+    }
+
+    private static void mostrarMenu() {
+        System.out.println("""
+                    
+                    --- Gestión de Empleados ---
+                    1. Insertar empleado
+                    2. Validar entrada de empleado
+                    3. Modificar perfil de empleado
+                    4. Cambiar contraseña de empleado
+                    5. Eliminar empleado
+                    6. Listar todos los empleados
+                    7. Obtener incidencia por ID
+                    8. Listar todas las incidencias
+                    9. Crear una nueva incidencia
+                    10. Incidencias por origen
+                    11. Incidencias por destino
+                    0. Salir
+                    """);
+    }
+
+    private static void GestionEmpleadosIncidencias() {
+        opcionesMenu.put(1, InsertarEmpleado::run);
+        opcionesMenu.put(2, ValidarEmpleado::run);
+        opcionesMenu.put(3, ModificarPerfilEmpleado::run);
+        opcionesMenu.put(4, CambiarContrasenaEmpleado::run);
+        opcionesMenu.put(5, EliminarEmpleado::run);
+        opcionesMenu.put(6, ListarTodosLosEmpleados::run);
+        opcionesMenu.put(7, ObtenerIncidenciaPorId::run);
+        opcionesMenu.put(8, ListarTodasLasIncidencias::run);
+        opcionesMenu.put(9, CrearNuevaIncidencia::run);
+        opcionesMenu.put(10, ObtenerIncidenciasPorOrigen::run);
+        opcionesMenu.put(11, ObtenerIncidenciasPorDestino::run);
+    }
+}

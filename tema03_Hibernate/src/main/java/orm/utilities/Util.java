@@ -60,7 +60,7 @@ public class Util {
     public static void printLnYellow(String message) { System.out.println(ANSI_YELLOW + message + ANSI_RESET); }
 
     public static String printEmpleado(EmpleadosDto subject) {
-        return String.format("%-10s | %-20s | %-30s | %-15s",
+        return String.format("%-5s | %-20s | %-30s | %-15s",
                 subject.getIdEmpleado(), subject.getNombreUsuario(), subject.getNombreCompleto(), subject.getTelefonoContacto());
     }
 
@@ -71,11 +71,22 @@ public class Util {
                 ? subject.getEmpleadosByIdEmpleadoDestino().getNombreCompleto() : "Desconocido";
         String fechaHora = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(subject.getFechaHora());
 
-        String header = String.format("%-5s | %-20s | %-20s | %-5s", subject.getIdIncidencia(), fechaHora, origen, destino, subject.getTipo());
+        String header = String.format("%-5s | %-20s | %-20s | %-5s | %s",
+                subject.getIdIncidencia(), fechaHora, origen, destino, subject.getTipo());
+
         String detalle = "Detalle: " + subject.getDetalle();
 
         printLnYellow(header);
         printLnRed(detalle);
+    }
+
+    public static void pausaAntesDeContinuar() {
+        printlnGreen("\nPresione Enter para continuar...");
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            printLnRed(e.getMessage());
+        }
     }
 
 }
