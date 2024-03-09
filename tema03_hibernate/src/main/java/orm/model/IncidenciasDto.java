@@ -15,11 +15,11 @@ public class IncidenciasDto {
 
     @Column(name = "fecha_hora", nullable = false)
     private Timestamp fechaHora;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_empleado_origen", referencedColumnName = "id_empleado")
     private EmpleadosDto empleadosByIdEmpleadoOrigen;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_empleado_destino", referencedColumnName = "id_empleado")
     private EmpleadosDto empleadosByIdEmpleadoDestino;
 
