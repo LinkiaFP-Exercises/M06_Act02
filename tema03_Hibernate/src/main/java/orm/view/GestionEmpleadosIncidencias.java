@@ -238,12 +238,12 @@ public class GestionEmpleadosIncidencias {
 
     private static void obtenerIncidenciaPorId() {
         try {
-            printYellow("--- OBTENER INCIDENCIA POR ID ---");
+            printlnGreen("--- OBTENER INCIDENCIA POR ID ---");
             int idIncidencia = util.pideEntero("Introduce el ID de la incidencia: ");
             IncidenciasDto incidencia = incidenciasService.buscarIncidenciaPorId(idIncidencia);
 
             if (incidencia != null) {
-                printYellow("Incidencia encontrada: ");
+                printLnYellow("Incidencia encontrada: ");
                 printIncidencia(incidencia);
             } else {
                 printLnRed("Incidencia no encontrada.");

@@ -71,11 +71,11 @@ public class Util {
                 ? subject.getEmpleadosByIdEmpleadoDestino().getNombreCompleto() : "Desconocido";
         String fechaHora = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(subject.getFechaHora());
 
-        String header = String.format("%-10s | %-20s | %-20s | %-5s", subject.getIdIncidencia(), fechaHora, origen, destino, subject.getTipo());
+        String header = String.format("%-5s | %-20s | %-20s | %-5s", subject.getIdIncidencia(), fechaHora, origen, destino, subject.getTipo());
         String detalle = "Detalle: " + subject.getDetalle();
 
-        printLnRed(header);
-        printLnYellow(detalle);
+        printLnYellow(header);
+        printLnRed(detalle);
     }
 
 }
