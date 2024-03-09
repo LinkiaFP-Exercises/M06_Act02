@@ -10,6 +10,16 @@ import java.util.logging.Logger;
 
 import static orm.utilities.Util.*;
 
+/**
+ * Clase para probar las funcionalidades del servicio de incidencias.
+ * Realiza pruebas como listar todas las incidencias, crear incidencias, buscar incidencia por ID,
+ * obtener incidencias por origen y destino. Estas pruebas ayudan a verificar el correcto funcionamiento
+ * de las operaciones relacionadas con incidencias al inicio de la aplicación.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see IncidenciasService
+ * @see IncidenciasDto
+ */
 public class TestIncidenciasService {
 
     private static final Logger log = Logger.getLogger(TestIncidenciasService.class.getName());
