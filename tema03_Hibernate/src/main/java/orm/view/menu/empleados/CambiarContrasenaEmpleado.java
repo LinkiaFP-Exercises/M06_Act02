@@ -7,11 +7,29 @@ import orm.utilities.Util;
 import static orm.utilities.Util.printLnRed;
 import static orm.utilities.Util.printlnGreen;
 
+/**
+ * Maneja el proceso de cambio de contraseña para los empleados.
+ * Interactúa con el usuario para realizar el cambio de contraseña de un empleado específico,
+ * validando la contraseña antigua antes de establecer una nueva.
+ * <p>
+ * Este proceso incluye la búsqueda del empleado por ID o nombre de usuario,
+ * la verificación de la contraseña actual, y la actualización a la nueva contraseña en la base de datos.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see EmpleadosDto
+ * @see EmpleadoService
+ * @see Util
+ */
 public class CambiarContrasenaEmpleado {
 
     private static final Util util = new Util();
     private static final EmpleadoService empleadoService = new EmpleadoService();
 
+    /**
+     * Ejecuta el flujo para cambiar la contraseña de un empleado.
+     * Solicita al usuario la identificación del empleado y las contraseñas (antigua y nueva),
+     * y realiza la actualización si la información es válida.
+     */
     public static void run() {
         try {
             printlnGreen("--- CAMBIAR CONTRASEÑA DE EMPLEADO ---");
@@ -44,6 +62,11 @@ public class CambiarContrasenaEmpleado {
         }
     }
 
+    /**
+     * Busca un empleado por ID o nombre de usuario, según la elección del usuario.
+     *
+     * @return El {@link EmpleadosDto} del empleado encontrado o null si no se encuentra.
+     */
     static EmpleadosDto buscarEmpleado() {
         int opcionBusqueda = util.pideEntero("Buscar por (1) ID o (2) Nombre de Usuario: ");
         EmpleadosDto empleado = null;
