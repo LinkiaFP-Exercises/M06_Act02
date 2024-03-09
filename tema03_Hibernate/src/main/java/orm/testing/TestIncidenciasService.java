@@ -17,36 +17,94 @@ public class TestIncidenciasService {
     private static final EmpleadoService empleadoService = new EmpleadoService();
 
     public static void doAll() {
+        testListarTodasLasIncidencias();
         testCrearIncidencia();
         testObtenerIncidenciaPorId();
-        testListarTodasLasIncidencias();
         testObtenerIncidenciasPorOrigen();
         testObtenerIncidenciasPorDestino();
     }
 
+    private static void testListarTodasLasIncidencias() {
+        try {
+            printYellow("LISTANDO TODAS LAS INCIDENCIAS: ");
+            List<IncidenciasDto> incidencias = incidenciasService.obtenerTodasLasIncidencias();
+            if (incidencias != null && !incidencias.isEmpty())
+                printSuccess();
+            else
+                printFail();
+        } catch (Exception e) { log.severe(e.getMessage()); }
+    }
+
     private static void testCrearIncidencia() {
-        printYellow("TEST: Crear Incidencia");
-        // Aquí tu código para crear una nueva incidencia y validar la operación
+        try {
+            // Asumiendo que ya tienes un método para buscar empleados por nombre de usuario
+            EmpleadosDto empleadoOrigen = empleadoService.buscarPorUsuario("agonzalez");
+            EmpleadosDto empleadoDestino = empleadoService.buscarPorUsuario("jramirez");
+
+            if (empleadoOrigen == null || empleadoDestino == null) {
+                printLnRed("Empleado de origen o destino no encontrado.");
+                return;
+            }
+
+            IncidenciasDto nuevaIncidencia = new IncidenciasDto();
+            // Configura la fecha y hora actual para la incidencia
+            nuevaIncidencia.setFechaHora(new java.sql.Timestamp(new java.util.Date().getTime()));
+            nuevaIncidencia.setEmpleadosByIdEmpleadoOrigen(empleadoOrigen);
+            nuevaIncidencia.setEmpleadosByIdEmpleadoDestino(empleadoDestino);
+            nuevaIncidencia.setDetalle("Detalle de prueba para la incidencia");
+            nuevaIncidencia.setTipo("N"); // N para normal, U para urgente
+
+            printYellow("INSERTANDO INCIDENCIA: ");
+            incidenciasService.crearIncidencia(nuevaIncidencia);
+            printSuccess();
+        } catch (Exception e) { log.severe(e.getMessage()); }
     }
 
     private static void testObtenerIncidenciaPorId() {
-        printYellow("TEST: Obtener Incidencia Por Id");
-        // Aquí tu código para obtener una incidencia por su ID y validar la operación
+        try {
+            printYellow("BUSCANDO INCIDENCIA POR ID: ");
+            int idIncidencia = 1;
+            IncidenciasDto incidencia = incidenciasService.buscarIncidenciaPorId(idIncidencia);
+            if (incidencia != null) {
+                printSuccess();
+            } else {
+                printFail();
+            }
+        } catch (Exception e) { log.severe(e.getMessage()); }
     }
 
-    private static void testListarTodasLasIncidencias() {
-        printYellow("TEST: Listar Todas Las Incidencias");
-        // Aquí tu código para listar todas las incidencias y validar la operación
-    }
 
     private static void testObtenerIncidenciasPorOrigen() {
-        printYellow("TEST: Obtener Incidencias Por Origen");
-        // Aquí tu código para obtener incidencias por el empleado origen y validar la operación
+        try {
+            printYellow("BUSCANDO INCIDENCIAS ORIGINADAS POR EMPLEADO POR ID: ");
+            int idEmpleadoOrigen = 1;
+            List<IncidenciasDto> incidencias = incidenciasService.obtenerIncidenciasPorOrigen(idEmpleadoOrigen);
+            if (incidencias != null && !incidencias.isEmpty()) {
+                printSuccess();
+            } else {
+                printFail();
+            }
+        } catch (Exception e) {
+            log.severe(e.getMessage());
+            printFail();
+        }
     }
 
+
     private static void testObtenerIncidenciasPorDestino() {
-        printYellow("TEST: Obtener Incidencias Por Destino");
-        // Aquí tu código para obtener incidencias destinadas a un empleado específico y validar la operación
+        try {
+            printYellow("BUSCANDO INCIDENCIAS DESTINADAS AL EMPLEADO POR ID: ");
+            int idEmpleadoDestino = 1;
+            List<IncidenciasDto> incidencias = incidenciasService.obtenerIncidenciasPorOrigen(idEmpleadoDestino);
+            if (incidencias != null && !incidencias.isEmpty()) {
+                printSuccess();
+            } else {
+                printFail();
+            }
+        } catch (Exception e) {
+            log.severe(e.getMessage());
+            printFail();
+        }
     }
 
     private static void printSuccess() {
