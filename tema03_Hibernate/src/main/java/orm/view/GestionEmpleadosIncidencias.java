@@ -9,7 +9,7 @@ import java.util.List;
 import static orm.utilities.Util.*;
 
 
-public class GestionEmpleados {
+public class GestionEmpleadosIncidencias {
 
     private static final Util util = new Util();
     private static final EmpleadoService empleadoService = new EmpleadoService();
