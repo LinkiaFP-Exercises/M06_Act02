@@ -4,7 +4,16 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
-@SuppressWarnings("unused")
+/**
+ * Clase que representa la entidad de incidencias en la base de datos.
+ * Almacena información de incidencias, incluyendo ID de la incidencia, fecha y hora,
+ * detalles y tipo. También incluye referencias a los empleados relacionados con la incidencia,
+ * tanto el origen como el destino. Esta clase es parte del modelo de datos y se utiliza
+ * para mapear los datos de la tabla incidencias a objetos en la aplicación.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see EmpleadosDto
+ */
 @Entity
 @Table(name = "incidencias", schema = "m06Act02Tema03")
 public class IncidenciasDto {
