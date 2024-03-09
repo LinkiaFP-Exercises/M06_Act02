@@ -10,6 +10,13 @@ import java.nio.file.Paths;
 import java.sql.Statement;
 import java.util.Objects;
 
+/**
+ * Utilidad para la gestión de la {@link SessionFactory} de Hibernate.
+ * Proporciona métodos para obtener la {@link SessionFactory}, construir la {@link SessionFactory} y ejecutar un script SQL inicial.
+ * Esta clase es crucial para la configuración inicial de Hibernate y asegura que se maneje de manera eficiente la creación de la {@link SessionFactory}.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ */
 public class HibernateUtil {
 
     static {
@@ -31,6 +38,10 @@ public class HibernateUtil {
         }
     }
 
+    /**
+     * Ejecuta un script SQL inicial para configurar la base de datos.
+     * Este método es útil para preparar la base de datos con datos necesarios antes de iniciar la aplicación.
+     */
     public static void executeInitSqlScript() {
         Session session = getSessionFactory().openSession();
         session.doWork(connection -> {
