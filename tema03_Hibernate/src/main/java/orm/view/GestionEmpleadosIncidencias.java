@@ -1,7 +1,9 @@
 package orm.view;
 
 import orm.model.EmpleadosDto;
+import orm.model.IncidenciasDto;
 import orm.service.EmpleadoService;
+import orm.service.IncidenciasService;
 import orm.utilities.Util;
 
 import java.util.List;
@@ -13,6 +15,7 @@ public class GestionEmpleadosIncidencias {
 
     private static final Util util = new Util();
     private static final EmpleadoService empleadoService = new EmpleadoService();
+    private static final IncidenciasService incidenciasService = new IncidenciasService();
 
     public static void start() {
         boolean salir = false;
@@ -26,7 +29,12 @@ public class GestionEmpleadosIncidencias {
                     4. Cambiar contraseña de empleado
                     5. Eliminar empleado
                     6. Listar todos los empleados
-                    7. Salir
+                    7. Obtener incidencia por ID
+                    8. Listar todas las incidencias
+                    9. Crear una nueva incidencia
+                    10. Incidencias creadas por mí
+                    11. Incidencias destinadas a mí
+                    0. Salir
                     """);
 
 
@@ -50,6 +58,21 @@ public class GestionEmpleadosIncidencias {
                     listarTodosLosEmpleados();
                     break;
                 case 7:
+                    obtenerIncidenciaPorId();
+                    break;
+                case 8:
+                    listarTodasLasIncidencias();
+                    break;
+                case 9:
+                    crearNuevaIncidencia();
+                    break;
+                case 10:
+                    obtenerIncidenciasPorOrigen();
+                    break;
+                case 11:
+                    obtenerIncidenciasPorDestino();
+                    break;
+                case 0:
                     salir = true;
                     util.close();
                     printlnGreen("Saliendo del programa...");
@@ -212,4 +235,118 @@ public class GestionEmpleadosIncidencias {
             }
         }
     }
+
+    private static void obtenerIncidenciaPorId() {
+        try {
+            printYellow("--- OBTENER INCIDENCIA POR ID ---");
+            int idIncidencia = util.pideEntero("Introduce el ID de la incidencia: ");
+            IncidenciasDto incidencia = incidenciasService.buscarIncidenciaPorId(idIncidencia);
+
+            if (incidencia != null) {
+                printYellow("Incidencia encontrada: ");
+                printIncidencia(incidencia);
+            } else {
+                printLnRed("Incidencia no encontrada.");
+            }
+        } catch (Exception e) {
+            printLnRed("Error al obtener la incidencia: " + e.getMessage());
+        }
+    }
+
+    private static void listarTodasLasIncidencias() {
+        printlnGreen("--- LISTADO DE INCIDENCIAS ---");
+        List<IncidenciasDto> incidencias = incidenciasService.obtenerTodasLasIncidencias();
+        if (incidencias.isEmpty()) {
+            printLnRed("No hay incidencias registradas.");
+        } else {
+            for (IncidenciasDto incidencia : incidencias) {
+                printIncidencia(incidencia);
+            }
+        }
+    }
+
+    private static void crearNuevaIncidencia() {
+        try {
+            printlnGreen("--- CREAR NUEVA INCIDENCIA ---");
+            String nombreUsuarioOrigen = util.pideTexto("Introduce el nombre de usuario del empleado origen: ");
+            EmpleadosDto empleadoOrigen = empleadoService.buscarPorUsuario(nombreUsuarioOrigen);
+            if (empleadoOrigen == null) {
+                printLnRed("Empleado de origen no encontrado.");
+                return;
+            }
+
+            String nombreUsuarioDestino = util.pideTexto("Introduce el nombre de usuario del empleado destino: ");
+            EmpleadosDto empleadoDestino = empleadoService.buscarPorUsuario(nombreUsuarioDestino);
+            if (empleadoDestino == null) {
+                printLnRed("Empleado de destino no encontrado.");
+                return;
+            }
+
+            String detalle = util.pideTexto("Introduce el detalle de la incidencia: ");
+            String tipo = util.pideTexto("Introduce el tipo de la incidencia (N/U): ");
+
+            IncidenciasDto nuevaIncidencia = new IncidenciasDto();
+            nuevaIncidencia.setEmpleadosByIdEmpleadoOrigen(empleadoOrigen);
+            nuevaIncidencia.setEmpleadosByIdEmpleadoDestino(empleadoDestino);
+            nuevaIncidencia.setDetalle(detalle);
+            nuevaIncidencia.setTipo(tipo);
+            nuevaIncidencia.setFechaHora(new java.sql.Timestamp(new java.util.Date().getTime()));
+
+            incidenciasService.crearIncidencia(nuevaIncidencia);
+            printlnGreen("Incidencia creada correctamente.");
+        } catch (Exception e) {
+            printLnRed("Error al crear la incidencia: " + e.getMessage());
+        }
+    }
+
+    private static void obtenerIncidenciasPorOrigen() {
+        try {
+            printlnGreen("--- OBTENER INCIDENCIAS POR ORIGEN ---");
+            int idEmpleadoOrigen = util.pideEntero("Introduce el ID del empleado origen: ");
+
+            EmpleadosDto empleadoOrigen = empleadoService.buscarPorId(idEmpleadoOrigen);
+            if (empleadoOrigen == null) {
+                printLnRed("Empleado de origen no encontrado.");
+                return;
+            }
+
+            List<IncidenciasDto> incidenciasPorOrigen = incidenciasService.obtenerIncidenciasPorOrigen(idEmpleadoOrigen);
+            if (incidenciasPorOrigen.isEmpty()) {
+                printLnRed("No hay incidencias registradas para el empleado de origen con ID: " + idEmpleadoOrigen);
+            } else {
+                printLnYellow("Incidencias registradas por el empleado de origen con ID: " + idEmpleadoOrigen);
+                for (IncidenciasDto incidencia : incidenciasPorOrigen) {
+                    printIncidencia(incidencia);
+                }
+            }
+        } catch (Exception e) {
+            printLnRed("Error al obtener las incidencias por origen: " + e.getMessage());
+        }
+    }
+
+    private static void obtenerIncidenciasPorDestino() {
+        try {
+            printlnGreen("--- OBTENER INCIDENCIAS POR DESTINO ---");
+            int idEmpleadoDestino = util.pideEntero("Introduce el ID del empleado destino: ");
+
+            EmpleadosDto empleadoDestino = empleadoService.buscarPorId(idEmpleadoDestino);
+            if (empleadoDestino == null) {
+                printLnRed("Empleado destino no encontrado.");
+                return;
+            }
+
+            List<IncidenciasDto> incidenciasPorDestino = incidenciasService.obtenerIncidenciasPorDestino(idEmpleadoDestino);
+            if (incidenciasPorDestino.isEmpty()) {
+                printLnRed("No hay incidencias registradas para el empleado destino con ID: " + idEmpleadoDestino);
+            } else {
+                printLnYellow("Incidencias dirigidas al empleado con ID: " + idEmpleadoDestino);
+                for (IncidenciasDto incidencia : incidenciasPorDestino) {
+                    printIncidencia(incidencia);
+                }
+            }
+        } catch (Exception e) {
+            printLnRed("Error al obtener las incidencias por destino: " + e.getMessage());
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package orm.utilities;
 
 import orm.model.EmpleadosDto;
+import orm.model.IncidenciasDto;
 
 import java.util.Scanner;
 
@@ -56,12 +57,25 @@ public class Util {
     public static void printYellow(String message) {
         System.out.print(ANSI_YELLOW + message + ANSI_RESET);
     }
-    public static void printLnYellow(String message) {
-        System.out.println(ANSI_YELLOW + message + ANSI_RESET);
-    }
+    public static void printLnYellow(String message) { System.out.println(ANSI_YELLOW + message + ANSI_RESET); }
 
     public static String printEmpleado(EmpleadosDto subject) {
         return String.format("%-10s | %-20s | %-30s | %-15s",
                 subject.getIdEmpleado(), subject.getNombreUsuario(), subject.getNombreCompleto(), subject.getTelefonoContacto());
     }
+
+    public static void printIncidencia(IncidenciasDto subject) {
+        String origen = subject.getEmpleadosByIdEmpleadoOrigen() != null
+                ? subject.getEmpleadosByIdEmpleadoOrigen().getNombreCompleto() : "Desconocido";
+        String destino = subject.getEmpleadosByIdEmpleadoDestino() != null
+                ? subject.getEmpleadosByIdEmpleadoDestino().getNombreCompleto() : "Desconocido";
+        String fechaHora = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(subject.getFechaHora());
+
+        String header = String.format("%-10s | %-20s | %-20s | %-5s", subject.getIdIncidencia(), fechaHora, origen, destino, subject.getTipo());
+        String detalle = "Detalle: " + subject.getDetalle();
+
+        printLnRed(header);
+        printLnYellow(detalle);
+    }
+
 }
