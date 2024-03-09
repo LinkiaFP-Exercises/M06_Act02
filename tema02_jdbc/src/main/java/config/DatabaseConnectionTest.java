@@ -4,9 +4,26 @@ package config;
 import java.sql.*;
 import java.util.logging.Logger;
 
+/**
+ * Clase para probar la conexión con la base de datos de la empresa y realizar una inicialización básica.
+ * Contiene métodos para testear la conexión a la base de datos y para inicializar la base de datos con datos de prueba.
+ * Utiliza {@link DatabaseConnection} para obtener la conexión a la base de datos.
+ * <p>
+ * La inicialización de la base de datos incluye la creación de una tabla de empleados y la inserción de algunos registros de prueba.
+ * Esta clase es útil para verificar que la conexión a la base de datos funciona como se espera y que la base de datos está correctamente configurada.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ */
 public class DatabaseConnectionTest {
     private static final Logger log = Logger.getLogger(DatabaseConnectionTest.class.getName());
 
+    /**
+     * Testea la conexión con la base de datos y realiza una serie de operaciones de prueba,
+     * incluyendo la inicialización de la base de datos con datos de prueba.
+     * <p>
+     * Registra información sobre el éxito o fracaso de las operaciones, incluyendo la conexión y consulta a la base de datos,
+     * así como la inicialización de la misma con datos de prueba.
+     */
     public static void testConnection() {
         Connection conn = null;
         try {
@@ -35,6 +52,15 @@ public class DatabaseConnectionTest {
         }
     }
 
+    /**
+     * Inicializa la base de datos con una configuración de prueba, incluyendo la creación de una nueva base de datos,
+     * una tabla de empleados, y la inserción de registros de prueba en dicha tabla.
+     * <p>
+     * Este método es llamado durante el proceso de testeo de la conexión para verificar que la base de datos
+     * puede ser modificada y consultada correctamente.
+     *
+     * @param conn La conexión a la base de datos que será utilizada para inicializar la base de datos.
+     */
     public static void inicializarBaseDeDatos(Connection conn) {
         String[] sqlStatements = {
                 "DROP DATABASE IF EXISTS empresa",
