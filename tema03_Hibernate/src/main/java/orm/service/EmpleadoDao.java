@@ -13,10 +13,25 @@ import orm.model.EmpleadosDto;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * DAO para la entidad {@link EmpleadosDto}.
+ * Ofrece operaciones de base de datos para la entidad Empleado, como buscar, guardar, actualizar y eliminar empleados.
+ * Utiliza Hibernate para interactuar con la base de datos.
+ *
+ * @author <a href="https://about.me/prof.guazina">"Fauno Guazina</a>
+ * @see EmpleadosDto
+ * @see HibernateUtil
+ */
 public class EmpleadoDao {
 
     private static final Logger log = Logger.getLogger(EmpleadoDao.class.getName());
 
+    /**
+     * Busca un empleado por su ID.
+     *
+     * @param idEmpleado ID del empleado a buscar.
+     * @return El {@link EmpleadosDto} encontrado o null si no existe.
+     */
     public EmpleadosDto buscarEmpleadoPorId(int idEmpleado) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.find(EmpleadosDto.class, idEmpleado);
@@ -25,6 +40,12 @@ public class EmpleadoDao {
         return null;
     }
 
+    /**
+     * Busca un empleado por su nombre de usuario.
+     *
+     * @param nombreUsuario Nombre de usuario del empleado a buscar.
+     * @return El {@link EmpleadosDto} encontrado o null si no existe.
+     */
     public EmpleadosDto buscarEmpleadoPorNombreUsuario(String nombreUsuario) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.byNaturalId(EmpleadosDto.class)
@@ -34,6 +55,11 @@ public class EmpleadoDao {
         catch (Exception e) { log.severe(e.getMessage()); return null; }
     }
 
+    /**
+     * Guarda un nuevo empleado en la base de datos.
+     *
+     * @param empleado El {@link EmpleadosDto} a guardar.
+     */
     public void guardarEmpleado(EmpleadosDto empleado) {
         Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -46,6 +72,13 @@ public class EmpleadoDao {
         }
     }
 
+    /**
+     * Busca un empleado por sus credenciales de acceso.
+     *
+     * @param usuario Nombre de usuario.
+     * @param contrasena Contraseña.
+     * @return El {@link EmpleadosDto} encontrado o null si las credenciales no son válidas.
+     */
     public EmpleadosDto buscarEmpleadoPorCredenciales(String usuario, String contrasena) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -61,6 +94,12 @@ public class EmpleadoDao {
         catch (Exception e) { log.severe(e.getMessage()); return null; }
     }
 
+    /**
+     * Actualiza la información de un empleado existente, pero no la contraseña.
+     *
+     * @param empleado El {@link EmpleadosDto} con la información actualizada.
+     * @return true si el empleado fue actualizado correctamente, false en caso contrario.
+     */
     public boolean actualizarEmpleado(EmpleadosDto empleado) {
         Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -79,6 +118,11 @@ public class EmpleadoDao {
         catch (Exception e) { log.severe(e.getMessage()); return false;}
     }
 
+    /**
+     * Actualiza la contraseña de un empleado.
+     *
+     * @param empleado El {@link EmpleadosDto} con la nueva contraseña.
+     */
     public void actualizarContrasena(EmpleadosDto empleado) {
         Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -91,6 +135,13 @@ public class EmpleadoDao {
         }
         catch (Exception e) { log.severe(e.getMessage()); }
     }
+
+    /**
+     * Actualiza la contraseña de un empleado sin verificar la antigua.
+     * Suponiendo que la verificación fue hecha en el front.
+     *
+     * @param empleado El {@link EmpleadosDto} con la nueva contraseña.
+     */
     public boolean actualizarContrasenaTrusted(EmpleadosDto empleado) {
         Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -99,9 +150,14 @@ public class EmpleadoDao {
             transaction.commit();
             return updated != null;
         }
-        catch (Exception e) { log.severe(e.getMessage()); return false;}
+        catch (Exception e) { log.severe(e.getMessage()); return false; }
     }
 
+    /**
+     * Elimina un empleado de la base de datos.
+     *
+     * @param empleado El {@link EmpleadosDto} a eliminar.
+     */
     public void eliminarEmpleado(EmpleadosDto empleado) {
         Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -112,6 +168,11 @@ public class EmpleadoDao {
         catch (Exception e) { log.severe(e.getMessage()); }
     }
 
+    /**
+     * Lista todos los empleados en la base de datos.
+     *
+     * @return Una lista de {@link EmpleadosDto} con todos los empleados.
+     */
     public List<EmpleadosDto> listarEmpleados() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
