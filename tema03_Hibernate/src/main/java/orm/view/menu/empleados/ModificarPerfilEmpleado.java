@@ -8,11 +8,28 @@ import static orm.utilities.Util.printLnRed;
 import static orm.utilities.Util.printlnGreen;
 import static orm.view.menu.empleados.CambiarContrasenaEmpleado.buscarEmpleado;
 
+/**
+ * Maneja la funcionalidad para modificar la información del perfil de un empleado existente.
+ * Permite al usuario actualizar el nombre de usuario, nombre completo y teléfono de contacto del empleado.
+ * Antes de realizar cualquier modificación, se busca al empleado para asegurar que existe en el sistema.
+ * <p>
+ * Si se proporcionan nuevos valores para los campos, estos se actualizarán; de lo contrario, se mantendrán los actuales.
+ * Es una herramienta crucial para mantener actualizada la información del personal en la base de datos.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see EmpleadosDto
+ * @see EmpleadoService
+ * @see Util
+ */
 public class ModificarPerfilEmpleado {
 
     private static final Util util = new Util();
     private static final EmpleadoService empleadoService = new EmpleadoService();
 
+    /**
+     * Ejecuta el proceso de actualización del perfil del empleado. Solicita al usuario la nueva información
+     * y, si es válida, actualiza el registro del empleado correspondiente.
+     */
     public static void run() {
         try {
             printlnGreen("--- MODIFICAR PERFIL DE EMPLEADO ---");
