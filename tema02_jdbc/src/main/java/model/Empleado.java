@@ -1,5 +1,16 @@
 package model;
 
+/**
+ * Representa un empleado dentro del sistema. Contiene información sobre el empleado,
+ * incluyendo su ID, nombre de usuario, contraseña, nombre completo, y teléfono de contacto.
+ * Esta clase ofrece métodos para obtener y establecer estos valores, permitiendo
+ * la manipulación y acceso a los datos del empleado.
+ * <p>
+ * Además, sobreescribe los métodos {@code toString}, {@code equals}, y {@code hashCode}
+ * para facilitar la visualización y comparación de objetos {@code Empleado}.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ */
 public class Empleado {
     private int idEmpleado;
     private String nombreUsuario;
