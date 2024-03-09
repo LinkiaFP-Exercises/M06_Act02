@@ -11,10 +11,25 @@ import orm.model.IncidenciasDto;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * DAO para la entidad {@link IncidenciasDto}.
+ * Ofrece operaciones de base de datos para la entidad Incidencia, permitiendo buscar, insertar y listar incidencias,
+ * así como encontrar incidencias por origen o destino. Utiliza Hibernate para la comunicación con la base de datos.
+ *
+ * @author <a href="https://about.me/prof.guazina">Fauno Guazina</a>
+ * @see IncidenciasDto
+ * @see HibernateUtil
+ */
 public class IncidenciasDao {
 
     private static final Logger log = Logger.getLogger(IncidenciasDao.class.getName());
 
+    /**
+     * Obtiene una incidencia por su ID.
+     *
+     * @param idIncidencia El ID de la incidencia a buscar.
+     * @return La {@link IncidenciasDto} encontrada o null si no existe.
+     */
     public IncidenciasDto obtenerIncidenciaPorId(int idIncidencia) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.get(IncidenciasDto.class, idIncidencia);
@@ -22,6 +37,11 @@ public class IncidenciasDao {
         catch (Exception e) { log.severe(e.getMessage()); return null; }
     }
 
+    /**
+     * Lista todas las incidencias registradas en la base de datos.
+     *
+     * @return Una lista de {@link IncidenciasDto} con todas las incidencias.
+     */
     public List<IncidenciasDto> listarTodasLasIncidencias() {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -36,6 +56,11 @@ public class IncidenciasDao {
         }
     }
 
+    /**
+     * Inserta una nueva incidencia en la base de datos.
+     *
+     * @param incidencia La {@link IncidenciasDto} a insertar.
+     */
     public void insertarIncidencia(IncidenciasDto incidencia) {
         Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
@@ -46,6 +71,12 @@ public class IncidenciasDao {
         catch (Exception e) { log.severe(e.getMessage()); }
     }
 
+    /**
+     * Encuentra incidencias originadas por un empleado originario.
+     *
+     * @param idEmpleadoOrigen El ID del empleado origen de las incidencias.
+     * @return Una lista de {@link IncidenciasDto} originadas por el empleado.
+     */
     public List<IncidenciasDto> encontrarIncidenciasPorOrigen(int idEmpleadoOrigen) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
@@ -56,6 +87,12 @@ public class IncidenciasDao {
         }
     }
 
+    /**
+     * Encuentra incidencias destinadas a un empleado destinatario.
+     *
+     * @param idEmpleadoDestino El ID del empleado destino de las incidencias.
+     * @return Una lista de {@link IncidenciasDto} destinadas al empleado.
+     */
     public List<IncidenciasDto> encontrarIncidenciasPorDestino(int idEmpleadoDestino) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
