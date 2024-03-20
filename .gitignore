@@ -1,0 +1,113 @@
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Package files #
+#################
+*.7z
+*.dmg
+*.gz
+*.iso
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.rpm
+
+# Project files #
+#################
+*.ctxt
+.mtj.tmp/
+*.jar #permitido, cuidado con las librerías
+
+# IDEs and tools #
+##################
+/.metadata/
+/.plugins/
+/.settings/
+/.JETEmitters/
+/.svn/
+/.idea/
+*.classpath
+*.project
+*.tern-project
+*.gitignore
+*.iml
+
+# Build directories #
+#####################
+bin/
+build/
+target/
+test-output/
+dist/
+logs/
+node_modules/
+cmake-build-debug/
+tmp/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Version control #
+###################
+CVS/
+.svn/
+.gitignore
+
+# Configuration files #
+#######################
+*.iws
+*.ipr
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+
+# Logs and temporary files #
+############################
+*.log
+*.tlog
+hs_err_pid*
+replay_pid*
+.lock
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+*.db
+
+# IDE Specific #
+################
+.apt_generated
+.factorypath
+.settings
+.springBeans
+.sts4-cache
+
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+# Custom #
+##########
+*.fauno
+/fauno
